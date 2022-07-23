@@ -52,7 +52,7 @@ input.onButtonPressed(Button.A, function () {
     }
 })
 WiFiIoT.on_WAN_remote(function (WAN_Command) {
-    if (Progress_Name == "com_sys") {
+    if (Progress_Name == "command") {
         OLED.clear()
         OLED.writeStringNewLine("Command:" + WAN_Command)
         if (WAN_Command == "light_on") {
@@ -102,8 +102,8 @@ function Setup () {
 }
 input.onButtonPressed(Button.B, function () {
     if (Progress == 1) {
-        Com_Sys()
-        Progress_Name = "com_sys"
+        Command()
+        Progress_Name = "command"
         Progress += 1
     }
     if (Progress_Name == "counter") {
@@ -116,7 +116,7 @@ input.onButtonPressed(Button.B, function () {
     }
 })
 WiFiIoT.on_WAN_remote_value(function (WAN_Command, Value) {
-    if (Progress_Name == "com_sys") {
+    if (Progress_Name == "command") {
         OLED.clear()
         OLED.writeStringNewLine("Command:" + WAN_Command + " Value:" + Value)
         if (WAN_Command == "light_brightness") {
