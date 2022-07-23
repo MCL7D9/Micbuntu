@@ -23,9 +23,6 @@ function Counter () {
     OLED.writeStringNewLine("Press A To Add A Value")
     OLED.writeStringNewLine("Press B To Add B Value")
 }
-function Com_Net () {
-	
-}
 WiFiIoT.on_wifi_received_value(function (Channel, receivedMessage, Value) {
     if (Progress_Name == "counter") {
         if (receivedMessage == "M1_CA") {
@@ -42,7 +39,6 @@ input.onButtonPressed(Button.A, function () {
         Progress += 1
     }
     if (Progress == 2) {
-        Com_Net()
         Progress_Name = "com_net"
         Progress += 1
     }
@@ -56,7 +52,7 @@ input.onButtonPressed(Button.A, function () {
     }
 })
 WiFiIoT.on_WAN_remote(function (WAN_Command) {
-    if (Progress_Name == "com_net") {
+    if (Progress_Name == "com_sys") {
         OLED.clear()
         OLED.writeStringNewLine("Command:" + WAN_Command)
         if (WAN_Command == "light_on") {
@@ -123,11 +119,8 @@ input.onButtonPressed(Button.B, function () {
         OLED.writeStringNewLine("B Value:" + B_Count)
     }
 })
-function Time () {
-	
-}
 WiFiIoT.on_WAN_remote_value(function (WAN_Command, Value) {
-    if (Progress_Name == "com_net") {
+    if (Progress_Name == "com_sys") {
         OLED.clear()
         OLED.writeStringNewLine("Command:" + WAN_Command + " Value:" + Value)
         if (WAN_Command == "light_brightness") {
