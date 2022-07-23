@@ -13,6 +13,7 @@ function Command () {
     )
 }
 WiFiIoT.on_wifi_connect(function (IP_Address, Device_ID) {
+    OLED.clear()
     OLED.writeStringNewLine("WiFi Connected")
     OLED.writeStringNewLine("Device ID:" + Device_ID)
 })
@@ -56,6 +57,7 @@ input.onButtonPressed(Button.A, function () {
 })
 WiFiIoT.on_WAN_remote(function (WAN_Command) {
     if (Progress_Name == "com_net") {
+        OLED.clear()
         OLED.writeStringNewLine("Command:" + WAN_Command)
         if (WAN_Command == "light_on") {
             SmartCity.turn_white_led(1023, AnalogPin.P0)
@@ -124,6 +126,15 @@ input.onButtonPressed(Button.B, function () {
 function Time () {
 	
 }
+WiFiIoT.on_WAN_remote_value(function (WAN_Command, Value) {
+    if (Progress_Name == "com_net") {
+        OLED.clear()
+        OLED.writeStringNewLine("Command:" + WAN_Command + " Value:" + Value)
+        if (WAN_Command == "light_brightness") {
+            SmartCity.turn_white_led(Value, AnalogPin.P0)
+        }
+    }
+})
 let list: number[] = []
 let Now_Time = 0
 let B_Count = 0
