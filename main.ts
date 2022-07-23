@@ -102,10 +102,6 @@ function Setup () {
 }
 input.onButtonPressed(Button.B, function () {
     if (Progress == 1) {
-        Command()
-        Progress += 1
-    }
-    if (Progress == 2) {
         Com_Sys()
         Progress_Name = "com_sys"
         Progress += 1
