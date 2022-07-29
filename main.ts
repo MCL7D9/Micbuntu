@@ -63,18 +63,6 @@ WiFiIoT.on_WAN_remote(function (WAN_Command) {
         }
     }
 })
-input.onGesture(Gesture.Shake, function () {
-    if (Progress > 1) {
-        Progress += -1
-        if (Progress == 1) {
-            Setup()
-        } else if (Progress == 2) {
-        	
-        } else {
-        	
-        }
-    }
-})
 function init () {
     OLED.clear()
     OLED.init(128, 64)
@@ -113,6 +101,18 @@ input.onButtonPressed(Button.B, function () {
         OLED.writeStringNewLine("Enter Counter Mode")
         OLED.writeStringNewLine("A Value:" + A_Count)
         OLED.writeStringNewLine("B Value:" + B_Count)
+    }
+})
+input.onGesture(Gesture.Shake, function () {
+    if (Progress > 1) {
+        Progress += -1
+        if (Progress == 1) {
+            Setup()
+        } else if (Progress == 2) {
+        	
+        } else {
+        	
+        }
     }
 })
 WiFiIoT.on_WAN_remote_value(function (WAN_Command, Value) {
