@@ -39,10 +39,10 @@ WiFiIoT.on_WAN_remote(function (WAN_Command) {
             SmartCity.turn_white_led(0, AnalogPin.P0)
         }
         if (WAN_Command == "door_close") {
-            SmartCity.turn_servo(180, AnalogPin.P10)
+            SmartCity.turn_servo(45, AnalogPin.P3)
         }
         if (WAN_Command == "door_open") {
-            SmartCity.turn_servo(45, AnalogPin.P0)
+            SmartCity.turn_servo(180, AnalogPin.P3)
         }
     }
 })
