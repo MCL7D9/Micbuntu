@@ -1,6 +1,3 @@
-function Com_Sys () {
-	
-}
 function Command () {
     OLED.clear()
     Progress_Name = "command"
@@ -17,26 +14,21 @@ WiFiIoT.on_wifi_connect(function (IP_Address, Device_ID) {
     OLED.writeStringNewLine("WiFi Connected")
     OLED.writeStringNewLine("Device ID:" + Device_ID)
 })
-function Counter () {
-    OLED.clear()
-    Progress_Name = "counter"
-    OLED.writeStringNewLine("Press A To Add A Value")
-    OLED.writeStringNewLine("Press B To Add B Value")
-}
 WiFiIoT.on_wifi_received_value(function (Channel, receivedMessage, Value) {
     if (Progress_Name == "counter") {
         if (receivedMessage == "M1_CA") {
-            OLED.writeString("Other A Value:" + Value)
+            other_a = Value
         }
         if (receivedMessage == "M1_CB") {
-            OLED.writeString("Other B Value:" + Value)
+            other_b = Value
         }
     }
 })
 input.onButtonPressed(Button.A, function () {
     if (Progress == 1) {
-        Counter()
+        Progress_Name = "Counter"
         Progress += 1
+        OLED.writeStringNewLine("Enter Counter Mode")
     }
     if (Progress == 2) {
         Progress_Name = "com_net"
@@ -46,7 +38,6 @@ input.onButtonPressed(Button.A, function () {
         A_Count += 1
         OLED.clear()
         WiFiIoT.wifi_send_message_value("D", "M0_CA", A_Count)
-        OLED.writeStringNewLine("Enter Counter Mode")
         OLED.writeStringNewLine("A Value:" + A_Count)
         OLED.writeStringNewLine("B Value:" + B_Count)
     }
@@ -70,8 +61,10 @@ function init () {
     WiFiIoT.wifi_listen_channel("D")
     WiFiIoT.setWifi("ASUS_MMLC2_2G", "smartcity")
     basic.clearScreen()
+    other_a = 0
+    other_b = 0
     B_Count = 0
-    B_Count = 0
+    A_Count = 0
     Progress = 0
     Now_Time = 1800
     list = [18, 0, 0]
@@ -93,12 +86,12 @@ input.onButtonPressed(Button.B, function () {
         Command()
         Progress_Name = "command"
         Progress += 1
+        OLED.writeStringNewLine("Enter Command Mode")
     }
     if (Progress_Name == "counter") {
         B_Count += 1
         OLED.clear()
         WiFiIoT.wifi_send_message_value("D", "M0_CB", B_Count)
-        OLED.writeStringNewLine("Enter Counter Mode")
         OLED.writeStringNewLine("A Value:" + A_Count)
         OLED.writeStringNewLine("B Value:" + B_Count)
     }
@@ -108,10 +101,6 @@ input.onGesture(Gesture.Shake, function () {
         Progress += -1
         if (Progress == 1) {
             Setup()
-        } else if (Progress == 2) {
-        	
-        } else {
-        	
         }
     }
 })
@@ -129,6 +118,8 @@ let Now_Time = 0
 let B_Count = 0
 let A_Count = 0
 let Progress = 0
+let other_b = 0
+let other_a = 0
 let Progress_Name = ""
 init()
 loops.everyInterval(1000, function () {
