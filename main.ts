@@ -1,14 +1,3 @@
-function Command () {
-    OLED.clear()
-    Progress_Name = "command"
-    OLED.writeStringNewLine("Enter Command Mode")
-    OLED.drawLine(
-    0,
-    10,
-    128,
-    10
-    )
-}
 WiFiIoT.on_wifi_connect(function (IP_Address, Device_ID) {
     OLED.clear()
     OLED.writeStringNewLine("WiFi Connected")
@@ -26,13 +15,10 @@ WiFiIoT.on_wifi_received_value(function (Channel, receivedMessage, Value) {
 })
 input.onButtonPressed(Button.A, function () {
     if (Progress == 1) {
-        Progress_Name = "Counter"
+        OLED.clear()
+        Progress_Name = "counter"
         Progress += 1
         OLED.writeStringNewLine("Enter Counter Mode")
-    }
-    if (Progress == 2) {
-        Progress_Name = "com_net"
-        Progress += 1
     }
     if (Progress_Name == "counter") {
         A_Count += 1
@@ -52,6 +38,12 @@ WiFiIoT.on_WAN_remote(function (WAN_Command) {
         if (WAN_Command == "light_off") {
             SmartCity.turn_white_led(0, AnalogPin.P0)
         }
+        if (WAN_Command == "door_close") {
+            SmartCity.turn_servo(180, AnalogPin.P10)
+        }
+        if (WAN_Command == "door_open") {
+            SmartCity.turn_servo(45, AnalogPin.P0)
+        }
     }
 })
 function init () {
@@ -61,6 +53,7 @@ function init () {
     WiFiIoT.wifi_listen_channel("D")
     WiFiIoT.setWifi("ASUS_MMLC2_2G", "smartcity")
     basic.clearScreen()
+    SmartCity.turn_servo(180, AnalogPin.P0)
     other_a = 0
     other_b = 0
     B_Count = 0
@@ -83,7 +76,7 @@ function Setup () {
 }
 input.onButtonPressed(Button.B, function () {
     if (Progress == 1) {
-        Command()
+        OLED.clear()
         Progress_Name = "command"
         Progress += 1
         OLED.writeStringNewLine("Enter Command Mode")
